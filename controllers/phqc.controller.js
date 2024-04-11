@@ -102,6 +102,7 @@ exports.uploadSingleDocPHQC = async (req, res) => {
     Responder(res, "OK", null, { key: key, image: upload.url }, 200);
     return;
   } catch (error) {
+    console.log("ERROR UPLOAD : ", error);
     Responder(res, "ERROR", null, null, 400);
     return;
   }
