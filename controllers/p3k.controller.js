@@ -27,22 +27,9 @@ exports.uploadP3K = async (req, res) => {
       true
     );
 
-    const uploadFileMasalahKesehatan =
-      masalahKesehatan.length > 5
-        ? await uploadImagesCloudinary(
-            `data:image/jpeg;base64,${masalahKesehatan}`,
-            `P3KFile/${data.id}`,
-            false
-          )
-        : { url: "" };
-
     //console.log(data);
 
-    if (
-      !uploadSignatureKapten.url ||
-      !uploadSignaturePetugas.url ||
-      (masalahKesehatan.length > 5 && !uploadFileMasalahKesehatan.url)
-    ) {
+    if (!uploadSignatureKapten.url || !uploadSignaturePetugas.url) {
       deleteFilesInFolder(`P3KFile/${data?.id}/`);
       return Responder(res, "ERROR", null, null, 400);
     }
@@ -70,7 +57,7 @@ exports.uploadP3K = async (req, res) => {
       abksakit: data.abkSakit,
       resiko: data.pemeriksaan.resiko,
       masalah: data.pemeriksaan.masalah,
-      buktimasalah: uploadFileMasalahKesehatan.url,
+      buktimasalah: masalahKesehatan,
       catatan: data.pemeriksaan.masalahCatatan,
       p3kstatus: data.recP3K,
       tanggalp3k: data.recTanggal,
@@ -88,6 +75,47 @@ exports.uploadP3K = async (req, res) => {
   } catch (error) {
     console.log(error);
     Responder(res, "ERROR", null, { success: false }, 400);
+    return;
+  }
+};
+
+exports.deleteP3KFolder = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await deleteFilesInFolder(`P3KFile/${id}/`);
+    Responder(res, "OK", null, { deleted: true }, 200);
+    return;
+  } catch (error) {
+    Responder(res, "ERROR", null, null, 400);
+    return;
+  }
+};
+
+exports.uploadSingleDocP3K = async (req, res) => {
+  const { key, image, docId } = req.body;
+  try {
+    if (image?.length < 5) {
+      Responder(res, "OK", null, { key: key, image: "" }, 200);
+      return;
+    }
+
+    const upload = await uploadImagesCloudinary(
+      `data:image/jpeg;base64,${image}`,
+      `P3KFile/${docId}`,
+      false
+    );
+
+    if (!upload.url) {
+      console.log("UPLOAD P3K FAILED");
+      return Responder(res, "ERROR", null, null, 400);
+    }
+
+    console.log("UPLOADED URL : " + upload.url);
+
+    Responder(res, "OK", null, { key: key, image: upload.url }, 200);
+    return;
+  } catch (error) {
+    Responder(res, "ERROR", null, null, 400);
     return;
   }
 };

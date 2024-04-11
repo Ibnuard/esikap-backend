@@ -17,7 +17,7 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false,
       },
       imo: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING(100),
         allowNull: false,
       },
       negaraasal: {

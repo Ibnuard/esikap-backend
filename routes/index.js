@@ -23,8 +23,10 @@ router.post("/upload/phqc", phqc.uploadPHQC);
 
 // P3K
 router.post("/upload/p3k", p3k.uploadP3K);
+router.post("/upload/p3k/single", p3k.uploadSingleDocP3K);
+router.post("/upload/p3k/delete/:id", p3k.deleteP3KFolder);
 
-// COP
+// SSCEC
 router.post("/upload/sscec", sscec.uploadSSCEC);
 router.post("/upload/sscec/single", sscec.uploadSingleDocSSCEC);
 router.post("/upload/sscec/delete/:id", sscec.deleteCOPFolder);
