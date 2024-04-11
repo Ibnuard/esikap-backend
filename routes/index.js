@@ -20,6 +20,8 @@ router.post("/user/login", user.login);
 
 // UPLOAD DOC
 router.post("/upload/phqc", phqc.uploadPHQC);
+router.post("/upload/phqc/single", phqc.uploadSingleDocPHQC);
+router.post("/upload/phqc/delete/:id", phqc.deletePHQCFolder);
 
 // P3K
 router.post("/upload/p3k", p3k.uploadP3K);

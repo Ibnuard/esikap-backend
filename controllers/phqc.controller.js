@@ -11,22 +11,16 @@ exports.uploadPHQC = async (req, res) => {
   const { data, file } = req.body;
   try {
     // Handle file
-    const pemeriksaanFile = getImageByKey(file, "pemeriksaanKapal");
+    const pemeriksaanFile = getImageByKey(file, "pemeriksaankapal");
 
     // Handle Upload
     const uploadSignature = await uploadImagesCloudinary(
       `data:image/jpeg;base64,${data.signature}`,
-      `SIGNATURE/PHQC/${data.id}`,
+      `PHQCFile/${data.id}/SIGNATURE`,
       true
     );
 
-    const uploadFilePemeriksaan = await uploadImagesCloudinary(
-      `data:image/jpeg;base64,${pemeriksaanFile}`,
-      `PHQCFile/${data.id}`,
-      false
-    );
-
-    if (!uploadSignature.url || !uploadFilePemeriksaan.url) {
+    if (!uploadSignature.url) {
       deleteFilesInFolder(`PHQCFile/${data?.id}/`);
       return Responder(res, "ERROR", null, null, 400);
     }
@@ -57,7 +51,7 @@ exports.uploadPHQC = async (req, res) => {
       kesimpulan: data.kesimpulan,
       petugaspemeriksa: data.petugasPelaksana,
       ttd: uploadSignature.url,
-      pemeriksaan_kapal_file: uploadFilePemeriksaan.url,
+      pemeriksaan_kapal_file: pemeriksaanFile,
       jenislayanan: data.jenisLayanan,
       jenispelayaran: data.jenisPelayaran,
     };
@@ -69,6 +63,46 @@ exports.uploadPHQC = async (req, res) => {
   } catch (error) {
     console.log(error);
     Responder(res, "ERROR", null, { success: false }, 400);
+    return;
+  }
+};
+
+exports.deletePHQCFolder = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await deleteFilesInFolder(`PHQCFile/${id}/`);
+    Responder(res, "OK", null, { deleted: true }, 200);
+    return;
+  } catch (error) {
+    Responder(res, "ERROR", null, null, 400);
+    return;
+  }
+};
+
+exports.uploadSingleDocPHQC = async (req, res) => {
+  const { key, image, docId } = req.body;
+  console.log("Upload PHQC Single Doc");
+  try {
+    if (image?.length < 5) {
+      Responder(res, "OK", null, { key: key, image: "" }, 200);
+      return;
+    }
+
+    const upload = await uploadImagesCloudinary(
+      `data:image/jpeg;base64,${image}`,
+      `PHQCFile/${docId}`,
+      false
+    );
+
+    if (!upload.url) {
+      console.log("UPLOAD PHQC FAILED");
+      return Responder(res, "ERROR", null, null, 400);
+    }
+
+    Responder(res, "OK", null, { key: key, image: upload.url }, 200);
+    return;
+  } catch (error) {
+    Responder(res, "ERROR", null, null, 400);
     return;
   }
 };
