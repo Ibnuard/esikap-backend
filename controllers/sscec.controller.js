@@ -71,7 +71,7 @@ exports.uploadSSCEC = async (req, res) => {
       hasilpemeriksaan: getImageByKey(file, "hasilpemeriksaan"),
     };
 
-    //console.log(data);
+    console.log(data);
 
     const sscecData = {
       namaagen: data.kapal.namaAgen,
@@ -117,10 +117,10 @@ exports.uploadSSCEC = async (req, res) => {
       vektor_geladak: data.sanitasi.vecGeladak,
       vektor_airminum: data.sanitasi.vecAirMinum,
       vektor_limbacair: data.sanitasi.vecLimbaCair,
-      vektor_airtergenang: data.sanitasiKapal.vecAirTergenang,
-      vektor_ruangmesin: data.sanitasiKapal.vecRuangMesin,
-      vektor_fasilitasmedis: data.sanitasiKapal.vecFasilitasMedik,
-      vektor_arealainnya: data.sanitasiKapal.vecAreaLainnya,
+      vektor_airtergenang: data.sanitasi.vecAirTergenang,
+      vektor_ruangmesin: data.sanitasi.vecRuangMesin,
+      vektor_fasilitasmedis: data.sanitasi.vecFasilitasMedik,
+      vektor_arealainnya: data.sanitasi.vecAreaLainnya,
       rekomendasi: data.sanitasi.rekomendasi,
       resikosanitasi: data.sanitasi.resikoSanitasi,
       masalahkesehatan: data.sanitasi.masalahKesehatan,

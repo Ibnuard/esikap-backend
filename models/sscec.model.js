@@ -1,3 +1,5 @@
+const moment = require("moment");
+
 module.exports = (sequelize, Sequelize) => {
   const SSCEC = sequelize.define(
     "t_sscec",
@@ -44,7 +46,7 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING(50),
         allowNull: false,
       },
-      sscecelama: {
+      ssceclama: {
         type: Sequelize.STRING(100),
         allowNull: false,
       },
