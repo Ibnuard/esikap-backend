@@ -41,10 +41,18 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false,
       },
       lokasisandar: {
-        type: Sequelize.STRING(50),
+        type: Sequelize.STRING(100),
+        allowNull: false,
+      },
+      lokasipemeriksaan: {
+        type: Sequelize.STRING(100),
         allowNull: false,
       },
       jml_abk_asing: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      jml_abk_asing_meninggal: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
@@ -60,6 +68,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      jml_abk_wni_meninggal: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       jml_abk_wni_sehat: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -72,6 +84,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      jml_penumpang_asing_meninggal: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       jml_penumpang_asing_sehat: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -81,6 +97,10 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false,
       },
       jml_penumpang_wni: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      jml_penumpang_wni_meninggal: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
@@ -169,6 +189,50 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false,
       },
       lastportclearance_note: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      bukukuning_file: {
+        type: Sequelize.TEXT("long"),
+        allowNull: false,
+      },
+      bukukuning_note: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      catatanperjalanan_file: {
+        type: Sequelize.TEXT("long"),
+        allowNull: false,
+      },
+      catatanperjalanan_note: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      izinberlayar_file: {
+        type: Sequelize.TEXT("long"),
+        allowNull: false,
+      },
+      izinberlayar_note: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      daftaralkes_file: {
+        type: Sequelize.TEXT("long"),
+        allowNull: false,
+      },
+      daftaralkes_note: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      daftarstore_file: {
+        type: Sequelize.TEXT("long"),
+        allowNull: false,
+      },
+      daftarstore_note: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      rekomendasi: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -297,6 +361,10 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false,
       },
       resikosanitasi: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      tandatandavektor: {
         type: Sequelize.STRING,
         allowNull: false,
       },
