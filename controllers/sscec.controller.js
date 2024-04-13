@@ -79,6 +79,8 @@ exports.uploadSSCEC = async (req, res) => {
       bendera: data.kapal.bendera,
       negaraasal: data.kapal.negaraAsal,
       tgltiba: data.tglTiba,
+      ssceclama: data.sscecLama,
+      lokasiterbit: data.tempatTerbit,
       imo: data.kapal.imo,
       grosstone: data.kapal.grossTone,
       tujuan: data.pelabuhanTujuan,

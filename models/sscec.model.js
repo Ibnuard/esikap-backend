@@ -44,6 +44,14 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING(50),
         allowNull: false,
       },
+      sscecelama: {
+        type: Sequelize.STRING(100),
+        allowNull: false,
+      },
+      lokasiterbit: {
+        type: Sequelize.STRING(100),
+        allowNull: false,
+      },
       lokasisandar: {
         type: Sequelize.STRING(50),
         allowNull: false,
