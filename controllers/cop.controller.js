@@ -152,6 +152,10 @@ exports.uploadCOP = async (req, res) => {
       vektor_geladak: data.sanitasiKapal.vecGeladak,
       vektor_airminum: data.sanitasiKapal.vecAirMinum,
       vektor_limbacair: data.sanitasiKapal.vecLimbaCair,
+      vektor_airtergenang: data.sanitasiKapal.vecAirTergenang,
+      vektor_ruangmesin: data.sanitasiKapal.vecRuangMesin,
+      vektor_fasilitasmedis: data.sanitasiKapal.vecFasilitasMedik,
+      vektor_arealainnya: data.sanitasiKapal.vecAreaLainnya,
       rekomendasi: data.sanitasiKapal.rekomendasi,
       resikosanitasi: data.sanitasiKapal.resikoSanitasi,
       masalahkesehatan: data.sanitasiKapal.masalahKesehatan,
@@ -170,6 +174,8 @@ exports.uploadCOP = async (req, res) => {
       nama_kapten: data.signNamaKapten,
       ttd_petugas: ttdPetugas.url,
       nama_petugas: data.signNamaPetugas,
+      jenislayanan: data.jenisLayanan,
+      jenispelayaran: data.jenisPelayaran,
     };
 
     await COP.create(copData);

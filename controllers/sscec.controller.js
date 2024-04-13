@@ -115,6 +115,10 @@ exports.uploadSSCEC = async (req, res) => {
       vektor_geladak: data.sanitasi.vecGeladak,
       vektor_airminum: data.sanitasi.vecAirMinum,
       vektor_limbacair: data.sanitasi.vecLimbaCair,
+      vektor_airtergenang: data.sanitasiKapal.vecAirTergenang,
+      vektor_ruangmesin: data.sanitasiKapal.vecRuangMesin,
+      vektor_fasilitasmedis: data.sanitasiKapal.vecFasilitasMedik,
+      vektor_arealainnya: data.sanitasiKapal.vecAreaLainnya,
       rekomendasi: data.sanitasi.rekomendasi,
       resikosanitasi: data.sanitasi.resikoSanitasi,
       masalahkesehatan: data.sanitasi.masalahKesehatan,
@@ -128,6 +132,8 @@ exports.uploadSSCEC = async (req, res) => {
       nama_kapten: data.signNamaKapten,
       ttd_petugas: ttdPetugas.url,
       nama_petugas: data.signNamaPetugas,
+      jenislayanan: data.jenisLayanan,
+      jenispelayaran: data.jenisPelayaran,
     };
 
     await SSCEC.create(sscecData);

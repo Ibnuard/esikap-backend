@@ -276,6 +276,22 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      vektor_airtergenang: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      vektor_ruangmesin: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      vektor_fasilitasmedis: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      vektor_arealainnya: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       rekomendasi: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -342,6 +358,14 @@ module.exports = (sequelize, Sequelize) => {
       },
       nama_petugas: {
         type: Sequelize.STRING,
+        allowNull: false,
+      },
+      jenislayanan: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+      },
+      jenispelayaran: {
+        type: Sequelize.STRING(50),
         allowNull: false,
       },
     },
