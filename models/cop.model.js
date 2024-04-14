@@ -436,6 +436,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING(50),
         allowNull: false,
       },
+      username: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
     },
     {
       tableName: "t_cop",

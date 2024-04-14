@@ -136,6 +136,7 @@ exports.uploadSSCEC = async (req, res) => {
       nama_petugas: data.signNamaPetugas,
       jenislayanan: data.jenisLayanan,
       jenispelayaran: data.jenisPelayaran,
+      username: data.username,
     };
 
     await SSCEC.create(sscecData);

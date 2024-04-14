@@ -24,10 +24,6 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING(10),
         allowNull: false,
       },
-      wilayah: {
-        type: Sequelize.STRING(10),
-        allowNull: false,
-      },
     },
     {
       tableName: "tb_super_user",

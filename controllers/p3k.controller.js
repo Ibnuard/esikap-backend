@@ -66,6 +66,7 @@ exports.uploadP3K = async (req, res) => {
       namakapten: data.signNamaKapten,
       ttdpetugas: uploadSignaturePetugas.url,
       namapetugas: data.signNamaPetugas,
+      username: data.username,
     };
 
     await P3k.create(p3kData);

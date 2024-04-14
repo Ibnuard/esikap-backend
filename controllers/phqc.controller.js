@@ -20,7 +20,13 @@ exports.uploadPHQC = async (req, res) => {
       true
     );
 
-    if (!uploadSignature.url) {
+    const uploadSignatureKapten = await uploadImagesCloudinary(
+      `data:image/jpeg;base64,${data.signatureKapten}`,
+      `PHQCFile/${data.id}/SIGNATURE`,
+      true
+    );
+
+    if (!uploadSignature.url || !uploadSignatureKapten.url) {
       deleteFilesInFolder(`PHQCFile/${data?.id}/`);
       return Responder(res, "ERROR", null, null, 400);
     }
@@ -54,6 +60,12 @@ exports.uploadPHQC = async (req, res) => {
       pemeriksaan_kapal_file: pemeriksaanFile,
       jenislayanan: data.jenisLayanan,
       jenispelayaran: data.jenisPelayaran,
+      masalahkesehatan: data.masalahKesehatan,
+      tgldiperiksa: data.tanggalDiperiksa,
+      jamdiperiksa: data.jamDiperiksa,
+      namakapten: data.kapten,
+      ttdkapten: uploadSignatureKapten.url,
+      username: data.username,
     };
 
     await PHQC.create(phqcData);

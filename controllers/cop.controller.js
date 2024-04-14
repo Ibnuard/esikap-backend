@@ -198,6 +198,7 @@ exports.uploadCOP = async (req, res) => {
       daftarstore_file: fileURL.daftarstore,
       daftarstore_note: data.dokumenKapal.daftarStoreNote,
       rekomendasi: data.dokumenKapal.rekomendasi,
+      username: data.username,
     };
 
     await COP.create(copData);

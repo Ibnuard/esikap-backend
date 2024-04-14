@@ -125,6 +125,30 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING(50),
         allowNull: false,
       },
+      masalahkesehatan: {
+        type: Sequelize.TEXT,
+        allowNull: false,
+      },
+      tgldiperiksa: {
+        type: Sequelize.TEXT,
+        allowNull: false,
+      },
+      jamdiperiksa: {
+        type: Sequelize.TEXT,
+        allowNull: false,
+      },
+      namakapten: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+      },
+      ttdkapten: {
+        type: Sequelize.TEXT("long"),
+        allowNull: false,
+      },
+      username: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
     },
     {
       tableName: "t_phqc",
