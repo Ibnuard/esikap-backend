@@ -17,6 +17,7 @@ router.post("/dev", dev.testPayload);
 
 // USER
 router.post("/user/login", user.login);
+router.post("/user/status", user.cekStatus);
 
 // UPLOAD DOC
 router.post("/upload/phqc", phqc.uploadPHQC);

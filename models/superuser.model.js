@@ -24,6 +24,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING(10),
         allowNull: false,
       },
+      aktif: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
     },
     {
       tableName: "tb_super_user",

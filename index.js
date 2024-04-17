@@ -43,6 +43,17 @@ app.get("/", (req, res) => {
   res.json({ message: "DEV" });
 });
 
+app.get("/alter", (req, res) => {
+  db.sequelize
+    .sync({ alter: true })
+    .then(() => {
+      res.json({ message: "SYNC DONE" });
+    })
+    .catch((err) => {
+      res.json({ message: "SYNC ERROR" });
+    });
+});
+
 // set port, listen for requests
 const PORT = process.env.PORT || 3001;
 

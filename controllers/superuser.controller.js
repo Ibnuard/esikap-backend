@@ -19,11 +19,48 @@ exports.login = async (req, res) => {
 
     // user data
     const userData = getUser["dataValues"];
+
+    if (userData.aktif == 0) {
+      return Responder(res, "ERROR", "Status user tidak aktif", null, 400);
+    }
+
+    console.log(userData);
+
+    if (userData.level != "petugas" && userData.level != "agen") {
+      return Responder(
+        res,
+        "ERROR",
+        "Hanya petugas dan agen yang memiliki akses aplikasi.",
+        null,
+        400
+      );
+    }
+
     const checkPassword = isMatchPassword(password, userData["password"]);
 
     if (!checkPassword) {
       return Responder(res, "ERROR", "Kata sandi tidak sesuai.", null, 400);
     }
+
+    Responder(res, "OK", null, userData, 200);
+    return;
+  } catch (error) {
+    Responder(res, "ERROR", null, null, 400);
+    return;
+  }
+};
+
+exports.cekStatus = async (req, res) => {
+  const { username } = req.query;
+  try {
+    const getUser = await TB_SUPERUSER.findOne({
+      where: {
+        username: username,
+      },
+    });
+
+    // user data
+    const userData = getUser["dataValues"];
 
     Responder(res, "OK", null, userData, 200);
     return;
