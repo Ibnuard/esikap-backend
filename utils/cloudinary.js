@@ -14,12 +14,15 @@ async function uploadImagesCloudinary(base64, folder, isSignature) {
       folder: folder,
       public_id: `doc${generateRandomNumber(100, 999)}`,
       transformation: [
-        {
-          width: isSignature ? 240 : 540,
-          height: isSignature ? 120 : undefined,
-          quality: "auto",
-          crop: "scale",
-        }, // Mengatur lebar maksimum dan kualitas gambar ke "auto:low" untuk kompresi
+        // {
+        //   width: isSignature ? 240 : 1080,
+        //   height: isSignature ? 120 : 1080,
+        //   quality: "auto",
+        //   crop: "scale",
+        // }, // Mengatur lebar maksimum dan kualitas gambar ke "auto:low" untuk kompresi
+        { width: 1000, crop: "scale" },
+        { quality: "auto:best" },
+        { fetch_format: "auto" },
       ],
     });
     return uploadResponse;
