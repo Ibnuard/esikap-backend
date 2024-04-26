@@ -20,7 +20,7 @@ async function uploadImagesCloudinary(base64, folder, isSignature) {
         //   quality: "auto",
         //   crop: "scale",
         // }, // Mengatur lebar maksimum dan kualitas gambar ke "auto:low" untuk kompresi
-        { width: 1000, crop: "scale" },
+        { width: isSignature ? 125 : 1000, crop: "scale" },
         { quality: "auto:best" },
         { fetch_format: "auto" },
       ],
