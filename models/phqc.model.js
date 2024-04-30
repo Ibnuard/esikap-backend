@@ -149,6 +149,30 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      petugas2: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+      },
+      nippetugas2: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+      },
+      ttd2: {
+        type: Sequelize.TEXT("long"),
+        allowNull: false,
+      },
+      petugas3: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+      },
+      nippetugas3: {
+        type: Sequelize.STRING(50),
+        allowNull: false,
+      },
+      ttd3: {
+        type: Sequelize.TEXT("long"),
+        allowNull: false,
+      },
     },
     {
       tableName: "t_phqc",

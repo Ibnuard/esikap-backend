@@ -29,6 +29,28 @@ exports.uploadP3K = async (req, res) => {
 
     //console.log(data);
 
+    const optSignature = {};
+
+    if (data.signPetugas2.length > 0) {
+      const uploadSignature = await uploadImagesCloudinary(
+        `data:image/jpeg;base64,${data.signPetugas2}`,
+        `PHQCFile/${data.id}/SIGNATURE`,
+        true
+      );
+
+      optSignature.ttd2 = uploadSignature.url;
+    }
+
+    if (data.signPetugas3.length > 0) {
+      const uploadSignature = await uploadImagesCloudinary(
+        `data:image/jpeg;base64,${data.signPetugas3}`,
+        `PHQCFile/${data.id}/SIGNATURE`,
+        true
+      );
+
+      optSignature.ttd3 = uploadSignature.url;
+    }
+
     if (!uploadSignatureKapten.url || !uploadSignaturePetugas.url) {
       deleteFilesInFolder(`P3KFile/${data?.id}/`);
       return Responder(res, "ERROR", null, null, 400);
@@ -67,6 +89,12 @@ exports.uploadP3K = async (req, res) => {
       ttdpetugas: uploadSignaturePetugas.url,
       namapetugas: data.signNamaPetugas,
       username: data.username,
+      petugas2: data.namaPetugas2 || "-",
+      nippetugas2: data.nipPetugas2 || "-",
+      ttd2: optSignature.ttd2 || "-",
+      petugas3: data.namaPetugas3 || "-",
+      nippetugas3: data.nipPetugas3 || "-",
+      ttd3: optSignature.ttd3 || "-",
     };
 
     await P3k.create(p3kData);

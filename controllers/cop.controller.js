@@ -67,6 +67,28 @@ exports.uploadCOP = async (req, res) => {
       return Responder(res, "ERROR", null, null, 400);
     }
 
+    const optSignature = {};
+
+    if (data.signPetugas2.length > 0) {
+      const uploadSignature = await uploadImagesCloudinary(
+        `data:image/jpeg;base64,${data.signPetugas2}`,
+        `PHQCFile/${data.id}/SIGNATURE`,
+        true
+      );
+
+      optSignature.ttd2 = uploadSignature.url;
+    }
+
+    if (data.signPetugas3.length > 0) {
+      const uploadSignature = await uploadImagesCloudinary(
+        `data:image/jpeg;base64,${data.signPetugas3}`,
+        `PHQCFile/${data.id}/SIGNATURE`,
+        true
+      );
+
+      optSignature.ttd3 = uploadSignature.url;
+    }
+
     const fileURL = {
       mdh: getImageByKey(file, "mdh"),
       sscec: getImageByKey(file, "sscec"),
@@ -199,6 +221,12 @@ exports.uploadCOP = async (req, res) => {
       daftarstore_note: data.dokumenKapal.daftarStoreNote,
       rekomendasi: data.dokumenKapal.rekomendasi,
       username: data.username,
+      petugas2: data.namaPetugas2 || "-",
+      nippetugas2: data.nipPetugas2 || "-",
+      ttd2: optSignature.ttd2 || "-",
+      petugas3: data.namaPetugas3 || "-",
+      nippetugas3: data.nipPetugas3 || "-",
+      ttd3: optSignature.ttd3 || "-",
     };
 
     await COP.create(copData);
