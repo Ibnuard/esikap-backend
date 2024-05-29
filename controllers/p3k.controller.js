@@ -8,7 +8,7 @@ const { getImageByKey } = require("../utils/utils");
 const P3k = db.p3k;
 
 exports.uploadP3K = async (req, res) => {
-  const { data, file, kapal_id } = req.body;
+  const { data, file, kapalid } = req.body;
   try {
     // Handle file
     const masalahKesehatan = getImageByKey(file, "masalahkesehatan");
@@ -95,7 +95,7 @@ exports.uploadP3K = async (req, res) => {
       petugas3: data.namaPetugas3 || "-",
       nippetugas3: data.nipPetugas3 || "-",
       ttd3: optSignature.ttd3 || "-",
-      kapal_id: kapal_id ? kapal_id : 999123,
+      kapal_id: kapalid || 999123,
     };
 
     await P3k.create(p3kData);

@@ -46,7 +46,7 @@ exports.uploadSingleDocSSCEC = async (req, res) => {
 };
 
 exports.uploadSSCEC = async (req, res) => {
-  const { data, file, kapal_id } = req.body;
+  const { data, file, kapalid } = req.body;
   try {
     //  Signature
     const ttdKapten = await uploadImagesCloudinary(
@@ -165,7 +165,7 @@ exports.uploadSSCEC = async (req, res) => {
       petugas3: data.namaPetugas3 || "-",
       nippetugas3: data.nipPetugas3 || "-",
       ttd3: optSignature.ttd3 || "-",
-      kapal_id: kapal_id ? kapal_id : 999123,
+      kapal_id: kapalid || 999123,
     };
 
     await SSCEC.create(sscecData);

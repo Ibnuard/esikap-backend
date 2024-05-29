@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const db = require("../db");
 const { Responder } = require("../utils/responder");
 const KAPAL = db.kapal;
@@ -5,13 +6,30 @@ const PHQC = db.phqc;
 const COP = db.cop;
 const P3K = db.p3k;
 const SSCEC = db.sscec;
+const moment = require('moment');
 
 exports.get_all_kapal = async (req, res) => {
+  const {history, cari} = req.query
   try {
-    const getKapal = await KAPAL.findAll();
+    const whereCondition = {}
+
+    if (history == "Y"){
+      whereCondition.status = 1
+    }else{
+      whereCondition.status = 0
+    }
+
+    if (cari){
+      whereCondition.nama_kapal = {
+        [Op.like]: `%${cari}%`,
+      };
+    }
+
+    const getKapal = await KAPAL.findAll({where: whereCondition});
     Responder(res, "OK", null, getKapal, 200);
     return;
   } catch (error) {
+    console.log(error);
     Responder(res, "ERROR", "Ada kesalahan jaringan!", null, 500);
     return;
   }
@@ -36,67 +54,47 @@ exports.update_status_kapal = async (req, res) => {
       return;
     }
 
-    // find if already upload
-    let doc_result = [];
-    for (let doc of kapalDoc) {
-      if (doc == "PHQC") {
-        findPHQC();
-      } else if (doc == "COP") {
-        findCOP();
-      } else if (doc == "SSCEC") {
-        findSSCEC();
-      } else {
-        findP3K();
-      }
+    // Array untuk menyimpan hasil pengecekan
+    const doc_result = [];
+
+    // Fungsi untuk menemukan dokumen
+    async function findDocument(model) {
+        const result = await model.findOne({ where: { kapal_id: id } });
+        return result ? 1 : 0;
     }
 
-    // == Find PHQC
-    async function findPHQC() {
-      const getPHQC = PHQC.findOne({ where: { kapal_id: id } });
-      if (getPHQC) {
-        doc_result.push(true);
-      } else {
-        doc_result.push(false);
-      }
-    }
+    // Pemetaan dokumen ke model yang sesuai
+    const documentModels = {
+        "PHQC": PHQC,
+        "COP": COP,
+        "SSCEC": SSCEC,
+        "P3K": P3K
+    };
 
-    // == Find COP
-    async function findCOP() {
-      const getCOP = COP.findOne({ where: { kapal_id: id } });
-      if (getCOP) {
-        doc_result.push(true);
-      } else {
-        doc_result.push(false);
-      }
-    }
+    // Menjalankan pengecekan untuk setiap dokumen secara paralel
+    const checks = kapalDoc.map(doc => {
+        const model = documentModels[doc];
+        if (model) {
+            return findDocument(model);
+        } else {
+            // Mengembalikan 0 jika dokumen tidak ditemukan di pemetaan
+            return Promise.resolve(0);
+        }
+    });
 
-    // == Find SSCEC
-    async function findSSCEC() {
-      const getSSCEC = SSCEC.findOne({ where: { kapal_id: id } });
-      if (getSSCEC) {
-        doc_result.push(true);
-      } else {
-        doc_result.push(false);
-      }
-    }
+    // Menunggu semua pengecekan selesai
+    const results = await Promise.all(checks);
 
-    // == Find P3K
-    async function findP3K() {
-      const getP3K = P3K.findOne({ where: { kapal_id: id } });
+    // Memperbarui hasil pengecekan
+    doc_result.push(...results);
 
-      if (getP3K) {
-        doc_result.push(true);
-      } else {
-        doc_result.push(false);
-      }
-    }
-
-    if (doc_result.every((item) => item == true)) {
-      const currentDate = moment().format("YYYY-MM-DD HH:mm:ss");
-      await KAPAL.update(
-        { status: 1, tanggal_diperiksa: currentDate },
-        { where: { id: id } }
-      );
+    // Memeriksa apakah semua dokumen ditemukan
+    if (doc_result.every(item => item === 1)) {
+        const currentDate = moment().format("YYYY-MM-DD HH:mm:ss");
+        await KAPAL.update(
+            { status: 1, tanggal_diperiksa: currentDate },
+            { where: { id: id } }
+        );
     }
 
     const getKapalStatus = await KAPAL.findOne({ where: { id: id } });
@@ -105,7 +103,8 @@ exports.update_status_kapal = async (req, res) => {
     Responder(res, "OK", null, { status: kapalDataStatus }, 200);
     return;
   } catch (error) {
-    Responder(res, "ERROR", "Ada kesalahan jaringan.", null, 500);
+    console.log(error);
+    Responder(res, "ERROR", `X Ada kesalahan jaringan. ${error}`, null, 500);
     return;
   }
 };
