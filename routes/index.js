@@ -9,6 +9,7 @@ const phqc = require("../controllers/phqc.controller");
 const cop = require("../controllers/cop.controller");
 const sscec = require("../controllers/sscec.controller");
 const p3k = require("../controllers/p3k.controller");
+const kapal = require("../controllers/kapal.controller");
 
 // ==== routes
 
@@ -38,5 +39,9 @@ router.post("/upload/sscec/delete/:id", sscec.deleteCOPFolder);
 router.post("/upload/cop", cop.uploadCOP);
 router.post("/upload/cop/single", cop.uploadSingleDoc);
 router.post("/upload/cop/delete/:id", cop.deleteCOPFolder);
+
+// kapal
+router.get("/kapal", kapal.get_all_kapal);
+router.post("/kapal/update-status/:id", kapal.update_status_kapal);
 
 module.exports = { router };

@@ -26,5 +26,6 @@ db.phqc = require("../models/phqc.model.js")(sequelize, Sequelize);
 db.cop = require("../models/cop.model.js")(sequelize, Sequelize);
 db.sscec = require("../models/sscec.model.js")(sequelize, Sequelize);
 db.p3k = require("../models/p3k.model.js")(sequelize, Sequelize);
+db.kapal = require("../models/kapal.model.js")(sequelize, Sequelize);
 
 module.exports = db;

@@ -55,6 +55,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.INTEGER,
         allowNull: true,
       },
+      tipe_dokumen: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
     },
     {
       tableName: "t_kapal",

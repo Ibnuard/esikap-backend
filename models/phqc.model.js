@@ -173,6 +173,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.TEXT("long"),
         allowNull: false,
       },
+      kapal_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
     },
     {
       tableName: "t_phqc",
