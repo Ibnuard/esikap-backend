@@ -3,6 +3,7 @@ const {
   uploadImagesCloudinary,
   deleteFilesInFolder,
 } = require("../utils/cloudinary");
+const { checkAndUpdateKapalStatus } = require("../utils/kapalUtils");
 const { Responder } = require("../utils/responder");
 const { getImageByKey } = require("../utils/utils");
 const P3k = db.p3k;
@@ -98,7 +99,11 @@ exports.uploadP3K = async (req, res) => {
       kapal_id: kapalid || 999123,
     };
 
-    await P3k.create(p3kData);
+    await P3k.create(p3kData).then(async (result) => {
+      if (kapalid != 999123) {
+        await checkAndUpdateKapalStatus(result.id, kapalid, "P3K");
+      }
+    });
 
     Responder(res, "OK", null, { success: true }, 200);
     return;

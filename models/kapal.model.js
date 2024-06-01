@@ -43,20 +43,44 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.DATE,
         allowNull: true,
       },
-      tanggal_diperiksa: {
-        type: Sequelize.DATE,
-        allowNull: true,
-      },
-      tanggal_disetujui: {
-        type: Sequelize.DATE,
-        allowNull: true,
-      },
       status: {
         type: Sequelize.INTEGER,
         allowNull: true,
       },
       tipe_dokumen: {
         type: Sequelize.STRING,
+        allowNull: true,
+      },
+      tgl_diperiksa_phqc: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      dok_id_phqc: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      tgl_diperiksa_cop: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      dok_id_cop: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      tgl_diperiksa_sscec: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      dok_id_sscec: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      tgl_diperiksa_p3k: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      dok_id_p3k: {
+        type: Sequelize.INTEGER,
         allowNull: true,
       },
     },

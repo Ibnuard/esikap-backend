@@ -41,7 +41,7 @@ router.post("/upload/cop/single", cop.uploadSingleDoc);
 router.post("/upload/cop/delete/:id", cop.deleteCOPFolder);
 
 // kapal
-router.get("/kapal", kapal.get_all_kapal);
+router.get("/kapal/:type", kapal.get_all_kapal);
 router.post("/kapal/update-status/:id", kapal.update_status_kapal);
 
 module.exports = { router };

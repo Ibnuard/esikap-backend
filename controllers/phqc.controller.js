@@ -3,9 +3,12 @@ const {
   uploadImagesCloudinary,
   deleteFilesInFolder,
 } = require("../utils/cloudinary");
+const { checkAndUpdateKapalStatus } = require("../utils/kapalUtils");
 const { Responder } = require("../utils/responder");
 const { getImageByKey } = require("../utils/utils");
 const PHQC = db.phqc;
+const KAPAL = db.kapal;
+const moment = require("moment");
 
 exports.uploadPHQC = async (req, res) => {
   const { data, file, kapalid } = req.body;
@@ -97,7 +100,12 @@ exports.uploadPHQC = async (req, res) => {
       kapal_id: kapalid || 999123,
     };
 
-    await PHQC.create(phqcData);
+    await PHQC.create(phqcData).then(async (result) => {
+      // if from agen
+      if (kapalid != 999123) {
+        await checkAndUpdateKapalStatus(result.id, kapalid, "PHQC");
+      }
+    });
 
     Responder(res, "OK", null, { success: true }, 200);
     return;

@@ -6,26 +6,27 @@ const PHQC = db.phqc;
 const COP = db.cop;
 const P3K = db.p3k;
 const SSCEC = db.sscec;
-const moment = require('moment');
+const moment = require("moment");
 
 exports.get_all_kapal = async (req, res) => {
-  const {history, cari} = req.query
+  const { cari } = req.query;
+  const { type } = req.params;
   try {
-    const whereCondition = {}
+    const whereCondition = {};
 
-    if (history == "Y"){
-      whereCondition.status = 1
-    }else{
-      whereCondition.status = 0
+    if (type == "WAITING") {
+      whereCondition.status = 0;
+    } else {
+      whereCondition.status = 1;
     }
 
-    if (cari){
+    if (cari) {
       whereCondition.nama_kapal = {
         [Op.like]: `%${cari}%`,
       };
     }
 
-    const getKapal = await KAPAL.findAll({where: whereCondition});
+    const getKapal = await KAPAL.findAll({ where: whereCondition });
     Responder(res, "OK", null, getKapal, 200);
     return;
   } catch (error) {
@@ -59,27 +60,27 @@ exports.update_status_kapal = async (req, res) => {
 
     // Fungsi untuk menemukan dokumen
     async function findDocument(model) {
-        const result = await model.findOne({ where: { kapal_id: id } });
-        return result ? 1 : 0;
+      const result = await model.findOne({ where: { kapal_id: id } });
+      return result ? 1 : 0;
     }
 
     // Pemetaan dokumen ke model yang sesuai
     const documentModels = {
-        "PHQC": PHQC,
-        "COP": COP,
-        "SSCEC": SSCEC,
-        "P3K": P3K
+      PHQC: PHQC,
+      COP: COP,
+      SSCEC: SSCEC,
+      P3K: P3K,
     };
 
     // Menjalankan pengecekan untuk setiap dokumen secara paralel
-    const checks = kapalDoc.map(doc => {
-        const model = documentModels[doc];
-        if (model) {
-            return findDocument(model);
-        } else {
-            // Mengembalikan 0 jika dokumen tidak ditemukan di pemetaan
-            return Promise.resolve(0);
-        }
+    const checks = kapalDoc.map((doc) => {
+      const model = documentModels[doc];
+      if (model) {
+        return findDocument(model);
+      } else {
+        // Mengembalikan 0 jika dokumen tidak ditemukan di pemetaan
+        return Promise.resolve(0);
+      }
     });
 
     // Menunggu semua pengecekan selesai
@@ -89,12 +90,12 @@ exports.update_status_kapal = async (req, res) => {
     doc_result.push(...results);
 
     // Memeriksa apakah semua dokumen ditemukan
-    if (doc_result.every(item => item === 1)) {
-        const currentDate = moment().format("YYYY-MM-DD HH:mm:ss");
-        await KAPAL.update(
-            { status: 1, tanggal_diperiksa: currentDate },
-            { where: { id: id } }
-        );
+    if (doc_result.every((item) => item === 1)) {
+      const currentDate = moment().format("YYYY-MM-DD HH:mm:ss");
+      await KAPAL.update(
+        { status: 1, tanggal_diperiksa: currentDate },
+        { where: { id: id } }
+      );
     }
 
     const getKapalStatus = await KAPAL.findOne({ where: { id: id } });
