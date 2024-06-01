@@ -3,6 +3,7 @@ const {
   uploadImagesCloudinary,
   deleteFilesInFolder,
 } = require("../utils/cloudinary");
+const { checkAndUpdateKapalStatus } = require("../utils/kapalUtils");
 const { Responder } = require("../utils/responder");
 const { getImageByKey } = require("../utils/utils");
 const SSCEC = db.sscec;
@@ -168,7 +169,9 @@ exports.uploadSSCEC = async (req, res) => {
       kapal_id: kapalid || 999123,
     };
 
-    await SSCEC.create(sscecData);
+    await SSCEC.create(sscecData).then(async (result) => {
+      await checkAndUpdateKapalStatus(result.id, kapalid, "SSCEC");
+    });
 
     Responder(res, "OK", null, { success: true }, 200);
     return;

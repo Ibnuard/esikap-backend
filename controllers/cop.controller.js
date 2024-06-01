@@ -3,6 +3,7 @@ const {
   uploadImagesCloudinary,
   deleteFilesInFolder,
 } = require("../utils/cloudinary");
+const { checkAndUpdateKapalStatus } = require("../utils/kapalUtils");
 const { Responder } = require("../utils/responder");
 const { getImageByKey } = require("../utils/utils");
 const COP = db.cop;
@@ -230,7 +231,9 @@ exports.uploadCOP = async (req, res) => {
       kapal_id: kapalid || 999123,
     };
 
-    await COP.create(copData);
+    await COP.create(copData).then(async (result) => {
+      await checkAndUpdateKapalStatus(result.id, kapalid, "COP");
+    });
 
     Responder(res, "OK", null, { success: true }, 200);
     return;
