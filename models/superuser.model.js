@@ -28,6 +28,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      avatar: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
     },
     {
       tableName: "tb_super_user",

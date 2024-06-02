@@ -19,6 +19,7 @@ router.post("/dev", dev.testPayload);
 // USER
 router.post("/user/login", user.login);
 router.post("/user/status", user.cekStatus);
+router.post("/user/avatar/:id", user.updateProfile);
 
 // UPLOAD DOC
 router.post("/upload/phqc", phqc.uploadPHQC);
