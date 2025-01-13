@@ -46,6 +46,7 @@ exports.login = async (req, res) => {
     Responder(res, "OK", null, userData, 200);
     return;
   } catch (error) {
+    console.log(error);
     Responder(res, "ERROR", null, null, 400);
     return;
   }

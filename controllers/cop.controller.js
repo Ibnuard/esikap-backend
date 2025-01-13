@@ -35,9 +35,10 @@ exports.uploadSingleDoc = async (req, res) => {
     );
 
     if (!upload.url) {
-      console.log("UPLOAD MDH FAILED");
       return Responder(res, "ERROR", null, null, 400);
     }
+
+    console.log(`UPLOAD ${key} : ${upload.url}`);
 
     Responder(res, "OK", null, { key: key, image: upload.url }, 200);
     return;
@@ -111,7 +112,10 @@ exports.uploadCOP = async (req, res) => {
       izinberlayar: getImageByKey(file, "izinberlayar"),
       daftaralkes: getImageByKey(file, "daftaralkes"),
       daftarstore: getImageByKey(file, "daftarstore"),
+      rekomendasi: getImageByKey(file, "rekomendasi"),
     };
+
+    console.log("FILE", file);
 
     const copData = {
       namaagen: data.kapal.namaAgen,
@@ -229,6 +233,7 @@ exports.uploadCOP = async (req, res) => {
       nippetugas3: data.nipPetugas3 || "-",
       ttd3: optSignature.ttd3 || "-",
       kapal_id: kapalid || 999123,
+      rekomendasi_file: fileURL.rekomendasi,
     };
 
     await COP.create(copData).then(async (result) => {

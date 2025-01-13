@@ -468,6 +468,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      rekomendasi_file: {
+        type: Sequelize.TEXT("long"),
+        allowNull: false,
+      },
     },
     {
       tableName: "t_cop",
