@@ -167,6 +167,7 @@ exports.uploadSSCEC = async (req, res) => {
       nippetugas3: data.nipPetugas3 || "-",
       ttd3: optSignature.ttd3 || "-",
       kapal_id: kapalid || 999123,
+      catatan_kesehatan: data.sanitasi.catatanKesehatan || "",
     };
 
     await SSCEC.create(sscecData).then(async (result) => {

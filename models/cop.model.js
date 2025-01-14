@@ -472,6 +472,18 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.TEXT("long"),
         allowNull: false,
       },
+      catatan_kesehatan: {
+        type: Sequelize.STRING(255),
+        allowNull: false,
+      },
+      karantina_file: {
+        type: Sequelize.TEXT("long"),
+        allowNull: false,
+      },
+      catatan_karantina: {
+        type: Sequelize.STRING(255),
+        allowNull: false,
+      },
     },
     {
       tableName: "t_cop",

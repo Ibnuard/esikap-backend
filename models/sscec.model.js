@@ -295,6 +295,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      catatan_kesehatan: {
+        type: Sequelize.STRING(255),
+        allowNull: false,
+      },
     },
     {
       tableName: "t_sscec",

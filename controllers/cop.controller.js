@@ -113,6 +113,7 @@ exports.uploadCOP = async (req, res) => {
       daftaralkes: getImageByKey(file, "daftaralkes"),
       daftarstore: getImageByKey(file, "daftarstore"),
       rekomendasi: getImageByKey(file, "rekomendasi"),
+      karantina: getImageByKey(file, "karantina"),
     };
 
     console.log("FILE", file);
@@ -234,6 +235,9 @@ exports.uploadCOP = async (req, res) => {
       ttd3: optSignature.ttd3 || "-",
       kapal_id: kapalid || 999123,
       rekomendasi_file: fileURL.rekomendasi,
+      catatan_kesehatan: data.sanitasiKapal.catatanKesehatan || "",
+      karantina_file: fileURL.karantina,
+      catatan_karantina: data.catatanKarantina || "",
     };
 
     await COP.create(copData).then(async (result) => {
